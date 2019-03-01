@@ -11,11 +11,18 @@ const inputAge = document.querySelector('.age');
 const table = document.querySelector('.tr');
 const tableAdd = document.querySelector('.tr_add');
 const inputID = document.querySelector('.remove_id');
+const updateUser = document.querySelector('.update');
+const inputUpdatedName = document.querySelector('.update_name')
+const inputUpdatedAge = document.querySelector('.update_age')
+const inputUpdatingID = document.querySelector('.update_id')
+
 
 allUsersBtn.addEventListener('click', getAllUsers);
 formByID.addEventListener('submit', formID);
 formByNameAge.addEventListener('submit', addUsersByNameAge);
 formDelID.addEventListener('submit', removeUser);
+updateUser.addEventListener('submit', updateUserName);
+
 
 function getAllUsers() {
 	fetch('https://test-users-api.herokuapp.com/users/').then((res) => res.json()).then((data) => getUsers(data.data));
@@ -66,3 +73,19 @@ function removeUser(e) {
 		}
 	});
 }
+	function updateUserName(e) {
+		e.preventDefault();
+		let name = inputUpdatedName.value;
+		let age = inputUpdatedAge.value;
+		let id = inputUpdatingID.value
+		console.log(id);
+	
+		fetch(`https://test-users-api.herokuapp.com/users/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ name: name, age: age }),
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		});
+	}
